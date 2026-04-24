@@ -28,6 +28,7 @@ const TopNav = () => {
                             href="https://drive.google.com/file/d/1zUKte4fUviflyikX4kc3nXCQLxjsQCFM/view?usp=sharing"
                             target="_blank" rel="noopener noreferrer"
                             className={navTextClass}
+                            style={{ color: 'inherit' }}
                         >
                             Resume
                         </a>
