@@ -39,7 +39,7 @@ const Bookshop = () => {
             <div
                 className="absolute inset-0 bg-cover bg-center z-0 transition-transform duration-[2s]"
                 style={{
-                    backgroundImage: 'url("/bookshop-scene.jpg")',
+                    backgroundImage: 'url("/ghibli-bookshop-character.png")',
                     transform: isMenuOpen ? 'scale(1.05)' : 'scale(1)'
                 }}
             >
@@ -52,7 +52,7 @@ const Bookshop = () => {
                     <div className="absolute inset-0 bg-[var(--color-glow)] opacity-0 group-hover:opacity-15 transition-opacity duration-500"></div>
                 </div>
 
-                {/* Character hover zone */}
+                {/* Character hover zone — invisible hotspot over the character in the background image */}
                 <div
                     className="absolute bottom-0 right-[12%] w-[28%] h-[65%] z-20 cursor-pointer"
                     onMouseEnter={() => {
@@ -65,13 +65,6 @@ const Bookshop = () => {
                         setShowSpeechBubble(true);
                     }}
                 >
-                    {/* Character image swaps between still/talking */}
-                    <img
-                        src={isTalking ? '/character-talking.svg' : '/character-still.svg'}
-                        alt="Saloni"
-                        className="absolute bottom-0 right-0 w-full h-full object-contain pointer-events-none"
-                        onError={(e) => e.target.style.display = 'none'}
-                    />
                 </div>
 
                 <SpeechBubble
