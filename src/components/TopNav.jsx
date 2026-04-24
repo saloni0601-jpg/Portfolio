@@ -25,10 +25,9 @@ const TopNav = () => {
                             About Me
                         </button>
                         <a
-                            href="https://drive.google.com/file/d/1zUKte4fUviflyikX4kc3nXCQLxjsQCFM/view?usp=sharing"
+                            href="https://drive.google.com/file/d/1-KpRsD5zjOZBH3a8nsRnIy09uMVIYaem/view?usp=sharing"
                             target="_blank" rel="noopener noreferrer"
                             className={navTextClass}
-                            style={{ color: 'inherit' }}
                         >
                             Resume
                         </a>

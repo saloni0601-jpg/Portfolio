@@ -69,13 +69,8 @@ p {
 }
 
 a {
-  color: var(--color-warm-wood);
   text-decoration: none;
   transition: color var(--transition-fast);
-}
-
-a:hover {
-  color: var(--color-dark-wood);
 }
 
 button {
