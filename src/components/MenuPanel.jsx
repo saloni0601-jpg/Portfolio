@@ -3,6 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { workExperiences, standaloneProjects } from '../data/portfolio';
 
+const BookSpine = ({ color }) => (
+    <svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+        <rect x="2" y="0" width="24" height="36" rx="2" fill={color} />
+        <rect x="2" y="0" width="5" height="36" rx="1" fill="rgba(0,0,0,0.15)" />
+        <rect x="6" y="8" width="16" height="2" rx="1" fill="rgba(255,255,255,0.4)" />
+        <rect x="6" y="13" width="12" height="2" rx="1" fill="rgba(255,255,255,0.3)" />
+        <rect x="6" y="24" width="14" height="2" rx="1" fill="rgba(255,255,255,0.3)" />
+        <rect x="6" y="29" width="10" height="2" rx="1" fill="rgba(255,255,255,0.2)" />
+    </svg>
+);
+
 const MenuPanel = ({ isOpen, onClose }) => {
     const panelVariants = {
         closed: { x: "100%" },
@@ -44,12 +55,8 @@ const MenuPanel = ({ isOpen, onClose }) => {
 
                         <div className="px-10 md:px-14 pt-16 pb-20">
                             <div className="mb-10">
-                                <h2 className="text-[32px] md:text-[36px] font-serif text-[var(--color-header)] tracking-wide mb-1">
-                                    Collection
-                                </h2>
-                                <p className="text-[15px] font-serif text-[var(--color-subheading)] italic opacity-80">
-                                    Every book holds a chapter of my journey.
-                                </p>
+                                <h2 className="text-[32px] md:text-[36px] font-serif text-[var(--color-header)] tracking-wide mb-1">Collection</h2>
+                                <p className="text-[15px] font-serif text-[var(--color-subheading)] italic opacity-80">Every book holds a chapter of my journey.</p>
                             </div>
 
                             <motion.div variants={containerVariants} initial="closed" animate="open" className="space-y-14">
@@ -64,35 +71,19 @@ const MenuPanel = ({ isOpen, onClose }) => {
                                         {workExperiences.map((exp) => (
                                             <motion.div key={exp.id} variants={itemVariants}>
                                                 <Link to={`/book/${exp.id}`} className="block group">
-                                                    <div className="bg-white/60 hover:bg-white/90 rounded-2xl px-6 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-250 ease-out">
+                                                    <div className="bg-white/60 hover:bg-white/90 rounded-2xl px-6 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-200 ease-out">
                                                         <div className="flex items-center justify-between gap-4">
                                                             <div className="flex items-center gap-4 flex-1 min-w-0">
-                                                                {/* Book icon */}
-                                                                <img
-                                                                    src="/icon-book.png"
-                                                                    alt=""
-                                                                    className="w-7 h-7 object-contain flex-shrink-0 opacity-70"
-                                                                    onError={(e) => {
-                                                                        e.target.style.display = 'none';
-                                                                        e.target.nextSibling.style.display = 'block';
-                                                                    }}
-                                                                />
-                                                                <div className="w-3 h-3 rounded-full flex-shrink-0 hidden" style={{ backgroundColor: exp.color }}></div>
+                                                                <BookSpine color={exp.color} />
                                                                 <div className="min-w-0">
                                                                     <h4 className="font-serif text-[20px] md:text-[22px] font-bold text-[var(--color-header)] group-hover:text-[var(--color-subheading)] transition-colors leading-tight mb-1">
                                                                         {exp.company}
                                                                     </h4>
-                                                                    <p className="font-serif text-[15px] text-[var(--color-subheading)] mb-1">
-                                                                        {exp.role}
-                                                                    </p>
-                                                                    <p className="font-serif text-[13px] text-[var(--color-date)] italic">
-                                                                        {exp.period} · {exp.location}
-                                                                    </p>
+                                                                    <p className="font-serif text-[15px] text-[var(--color-subheading)] mb-1">{exp.role}</p>
+                                                                    <p className="font-serif text-[13px] text-[var(--color-date)] italic">{exp.period} · {exp.location}</p>
                                                                 </div>
                                                             </div>
-                                                            <span className="font-serif text-[13px] text-[var(--color-subheading)] italic opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                                                                Open
-                                                            </span>
+                                                            <span className="font-serif text-[13px] text-[var(--color-subheading)] italic opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">Open</span>
                                                         </div>
                                                     </div>
                                                 </Link>
@@ -111,7 +102,7 @@ const MenuPanel = ({ isOpen, onClose }) => {
                                         {standaloneProjects.map((project) => (
                                             <motion.div key={project.id} variants={itemVariants}>
                                                 <Link to={`/record/${project.id}`} className="block group h-full">
-                                                    <div className="bg-white/60 hover:bg-white/90 rounded-2xl px-5 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-250 ease-out h-full flex flex-col">
+                                                    <div className="bg-white/60 hover:bg-white/90 rounded-2xl px-5 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-200 ease-out h-full flex flex-col">
                                                         <div className="inline-block self-start px-2.5 py-1 rounded-full text-[11px] font-serif font-bold tracking-wide text-white mb-3 shadow-sm"
                                                             style={{ backgroundColor: project.color }}>
                                                             {project.category}

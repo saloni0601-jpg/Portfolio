@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const TopNav = () => {
     const [showContactModal, setShowContactModal] = useState(false);
     const [showAboutModal, setShowAboutModal] = useState(false);
+    const location = useLocation();
+
+    // On landing page use white text, on inner pages use dark text
+    const isLanding = location.pathname === '/';
+    const navTextClass = isLanding
+        ? "font-serif text-[18px] font-bold text-white hover:text-white/70 transition-colors drop-shadow-md"
+        : "font-serif text-[18px] font-bold text-[var(--color-header)] hover:text-[var(--color-subheading)] transition-colors";
+    const navBgClass = isLanding
+        ? "fixed top-0 left-0 right-0 z-50 bg-transparent"
+        : "fixed top-0 left-0 right-0 z-50 bg-[#FFF7E6]/95 backdrop-blur-sm border-b border-[var(--color-header)]/10 shadow-sm";
 
     return (
         <>
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+            <nav className={navBgClass}>
                 <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-end">
                     <div className="flex items-center gap-8">
-                        <button onClick={() => setShowAboutModal(true)}
-                            className="font-serif text-[18px] text-white hover:text-white/70 transition-colors drop-shadow-md">
+                        <button onClick={() => setShowAboutModal(true)} className={navTextClass}>
                             About Me
                         </button>
-                        <a href="https://drive.google.com/file/d/1zUKte4fUviflyikX4kc3nXCQLxjsQCFM/view"
+                        <a
+                            href="https://drive.google.com/file/d/1zUKte4fUviflyikX4kc3nXCQLxjsQCFM/view?usp=sharing"
                             target="_blank" rel="noopener noreferrer"
-                            className="font-serif text-[18px] text-white hover:text-white/70 transition-colors drop-shadow-md">
+                            className={navTextClass}
+                        >
                             Resume
                         </a>
-                        <button onClick={() => setShowContactModal(true)}
-                            className="font-serif text-[18px] text-white hover:text-white/70 transition-colors drop-shadow-md">
+                        <button onClick={() => setShowContactModal(true)} className={navTextClass}>
                             Contact
                         </button>
                     </div>

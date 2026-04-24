@@ -3,6 +3,10 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { workExperiences } from '../data/portfolio';
 
+const cleanText = (text) => text
+    .replace(/0→1/g, 'zero to one')
+    .replace(/→/g, 'to');
+
 const BookDetails = () => {
     const { bookId } = useParams();
     const navigate = useNavigate();
@@ -14,10 +18,10 @@ const BookDetails = () => {
         <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="min-h-screen bg-[var(--color-bg-cream)] pt-20"
+            className="min-h-screen bg-[var(--color-bg-cream)]"
             style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")' }}
         >
-            <div className="max-w-4xl mx-auto px-10 md:px-16 pt-8 pb-20">
+            <div className="max-w-4xl mx-auto px-12 md:px-20 pt-28 pb-20">
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-[13px] font-serif text-[var(--color-date)] mb-10">
@@ -36,15 +40,14 @@ const BookDetails = () => {
                     </h1>
                     <p className="font-serif text-[18px] md:text-[20px] text-[var(--color-subheading)] mb-1">{book.role}</p>
                     <p className="font-serif text-[14px] text-[var(--color-date)] italic mb-6">{book.period} · {book.location}</p>
-                    <p className="font-serif text-[16px] text-[var(--color-text-dark)] leading-relaxed max-w-3xl">{book.description}</p>
+                    <p className="font-serif text-[16px] text-[var(--color-text-dark)] leading-relaxed max-w-3xl">{cleanText(book.description)}</p>
 
-                    {/* Key metrics */}
                     {book.highlights && (
                         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
                             {book.highlights.map((h, i) => (
                                 <div key={i} className="flex items-start gap-2 text-[15px] font-serif text-[var(--color-text-dark)]">
                                     <span className="text-[var(--color-date)] mt-[2px] flex-shrink-0">❧</span>
-                                    <span className="font-bold">{h}</span>
+                                    <span className="font-bold">{cleanText(h)}</span>
                                 </div>
                             ))}
                         </div>
@@ -65,10 +68,10 @@ const BookDetails = () => {
                                         <div className="flex items-center justify-between gap-4">
                                             <div className="flex-1 min-w-0">
                                                 <h3 className="font-serif text-[18px] md:text-[20px] font-bold text-[var(--color-header)] group-hover:text-[var(--color-subheading)] transition-colors leading-snug mb-2">
-                                                    {project.title}
+                                                    {cleanText(project.title)}
                                                 </h3>
                                                 <p className="font-serif text-[14px] text-[var(--color-text-dark)] opacity-75 leading-relaxed mb-3">
-                                                    {project.description}
+                                                    {cleanText(project.description)}
                                                 </p>
                                                 <div className="flex flex-wrap gap-1.5">
                                                     {project.technologies.slice(0, 4).map(tech => (

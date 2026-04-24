@@ -3,6 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { workExperiences } from '../data/portfolio';
 
+const cleanText = (text) => text
+    .replace(/0→1/g, 'zero to one')
+    .replace(/→/g, 'to');
+
 const ChapterDetails = () => {
     const { bookId, chapterId } = useParams();
     const navigate = useNavigate();
@@ -13,21 +17,14 @@ const ChapterDetails = () => {
 
     if (!book || !chapter) return <div className="p-10 text-center font-serif text-[var(--color-header)]">Chapter not found</div>;
 
-    // Replace arrows with contextual words
-    const cleanText = (text) => text
-        .replace(/0→1/g, 'zero to one')
-        .replace(/→/g, 'to');
-
-    const highlightBullets = chapter.highlights || [];
-
     return (
         <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="min-h-screen bg-[var(--color-bg-cream)] pt-20"
+            className="min-h-screen bg-[var(--color-bg-cream)]"
             style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")' }}
         >
-            <div className="max-w-3xl mx-auto px-10 md:px-16 pt-8 pb-20">
+            <div className="max-w-3xl mx-auto px-12 md:px-20 pt-28 pb-20">
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-[13px] font-serif text-[var(--color-date)] mb-10">
@@ -37,7 +34,7 @@ const ChapterDetails = () => {
                     <span className="opacity-40">/</span>
                     <button onClick={() => navigate(`/book/${bookId}`)} className="hover:text-[var(--color-subheading)] transition-colors">{book.company}</button>
                     <span className="opacity-40">/</span>
-                    <span className="text-[var(--color-header)] font-medium truncate max-w-[200px]">{chapter.title}</span>
+                    <span className="text-[var(--color-header)] font-medium truncate max-w-[200px]">{cleanText(chapter.title)}</span>
                 </div>
 
                 <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}>
@@ -74,7 +71,6 @@ const ChapterDetails = () => {
                         </div>
                     </div>
 
-                    {/* STAR */}
                     <div className="space-y-5">
                         {chapter.situation && (
                             <div className="bg-white/60 rounded-2xl p-6 border border-[var(--color-date)]/15">
@@ -88,11 +84,11 @@ const ChapterDetails = () => {
                                 <p className="font-serif text-[15px] text-[var(--color-text-dark)] leading-relaxed">{cleanText(chapter.task)}</p>
                             </div>
                         )}
-                        {highlightBullets.length > 0 && (
+                        {chapter.highlights && chapter.highlights.length > 0 && (
                             <div className="bg-white/60 rounded-2xl p-6 border border-[var(--color-date)]/15">
                                 <h3 className="text-[11px] uppercase tracking-[0.2em] font-bold text-[var(--color-subheading)] mb-4">Project Highlights</h3>
                                 <ul className="space-y-2">
-                                    {highlightBullets.map((h, i) => (
+                                    {chapter.highlights.map((h, i) => (
                                         <li key={i} className="flex items-start gap-3 font-serif text-[15px] text-[var(--color-text-dark)] leading-relaxed">
                                             <span className="text-[var(--color-date)] flex-shrink-0 mt-[2px]">❧</span>
                                             <span>{cleanText(h)}</span>

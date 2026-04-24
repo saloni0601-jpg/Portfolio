@@ -3,6 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { standaloneProjects } from '../data/portfolio';
 
+const cleanText = (text) => text
+    .replace(/0→1/g, 'zero to one')
+    .replace(/→/g, 'to');
+
 const RecordDetails = () => {
     const { recordId } = useParams();
     const navigate = useNavigate();
@@ -11,10 +15,6 @@ const RecordDetails = () => {
     useEffect(() => { window.scrollTo(0, 0); }, []);
 
     if (!project) return <div className="p-10 text-center font-serif text-[var(--color-header)]">Record not found</div>;
-
-    const cleanText = (text) => text
-        .replace(/0→1/g, 'zero to one')
-        .replace(/→/g, 'to');
 
     const skillsArray = project.skillsUsed
         ? project.skillsUsed.split('·').map(s => s.trim()).filter(s => s)
@@ -26,10 +26,10 @@ const RecordDetails = () => {
         <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="min-h-screen bg-[var(--color-bg-cream)] flex flex-col pt-20"
+            className="min-h-screen bg-[var(--color-bg-cream)] flex flex-col"
             style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")' }}
         >
-            <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full px-10 md:px-16 pt-8 pb-20">
+            <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full px-12 md:px-20 pt-28 pb-20">
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-[13px] font-serif text-[var(--color-date)] mb-10">
@@ -37,13 +37,11 @@ const RecordDetails = () => {
                     <span className="opacity-40">/</span>
                     <button onClick={() => navigate('/', { state: { openShelf: true } })} className="hover:text-[var(--color-subheading)] transition-colors">Shelf</button>
                     <span className="opacity-40">/</span>
-                    <span className="text-[var(--color-header)] font-medium truncate max-w-[220px]">{project.title}</span>
+                    <span className="text-[var(--color-header)] font-medium truncate max-w-[220px]">{cleanText(project.title)}</span>
                 </div>
 
-                {/* Content centered vertically */}
                 <div className="flex-1 flex flex-col justify-center">
-
-                    {/* Title + category + description */}
+                    {/* Title + category */}
                     <div className="mb-8 pb-6 border-b border-[var(--color-date)]/20">
                         <div className="inline-block px-3 py-1.5 rounded-full text-[12px] font-serif font-bold text-white shadow-sm mb-4"
                             style={{ backgroundColor: project.color }}>

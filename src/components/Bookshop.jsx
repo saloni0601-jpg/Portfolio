@@ -68,9 +68,9 @@ const Bookshop = () => {
                     <div className="absolute inset-0 bg-[var(--color-glow)] opacity-0 group-hover:opacity-15 transition-opacity duration-500"></div>
                 </div>
 
-                {/* Saloni hotspot — right side character */}
+                {/* Saloni hotspot — right side, larger zone */}
                 <div
-                    className="absolute bottom-0 right-[10%] w-[30%] h-[70%] z-20 cursor-pointer"
+                    className="absolute bottom-0 right-[5%] w-[40%] h-[80%] z-20 cursor-pointer"
                     onClick={(e) => {
                         e.stopPropagation();
                         setShowSaloniBubble(prev => !prev);
@@ -78,9 +78,9 @@ const Bookshop = () => {
                     }}
                 />
 
-                {/* Cat hotspot — bottom left area */}
+                {/* Cat hotspot — bottom left, larger zone */}
                 <div
-                    className="absolute bottom-[5%] left-[10%] w-[18%] h-[25%] z-20 cursor-pointer"
+                    className="absolute bottom-0 left-[0%] w-[30%] h-[35%] z-20 cursor-pointer"
                     onClick={(e) => {
                         e.stopPropagation();
                         setShowCatBubble(prev => !prev);
@@ -88,20 +88,20 @@ const Bookshop = () => {
                     }}
                 />
 
-                {/* Saloni speech bubble */}
+                {/* Saloni speech bubble — above her */}
                 <SpeechBubblePopup
                     isVisible={showSaloniBubble && !isMenuOpen}
                     onClose={() => setShowSaloniBubble(false)}
                     text="Hi, I am Saloni — an AI Product Manager and CMU grad. Click anywhere to explore my work."
-                    style={{ bottom: '68%', right: '8%' }}
+                    style={{ bottom: '72%', right: '8%' }}
                 />
 
-                {/* Cat speech bubble */}
+                {/* Cat speech bubble — above the cat */}
                 <SpeechBubblePopup
                     isVisible={showCatBubble && !isMenuOpen}
                     onClose={() => setShowCatBubble(false)}
                     text="3 years of product ownership. Zero to one launches across 3 countries. 13 projects shipped. I have been here for all of it."
-                    style={{ bottom: '28%', left: '8%' }}
+                    style={{ bottom: '38%', left: '5%' }}
                 />
 
                 {/* Dust motes */}
