@@ -6,17 +6,12 @@ import { workExperiences, standaloneProjects } from '../data/portfolio';
 const MenuPanel = ({ isOpen, onClose }) => {
     const panelVariants = {
         closed: { x: "100%" },
-        open: {
-            x: 0,
-            transition: { type: "spring", stiffness: 280, damping: 28 }
-        }
+        open: { x: 0, transition: { type: "spring", stiffness: 280, damping: 28 } }
     };
-
     const containerVariants = {
         open: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
         closed: { transition: { staggerChildren: 0.04, staggerDirection: -1 } }
     };
-
     const itemVariants = {
         open: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 24 } },
         closed: { y: 16, opacity: 0 }
@@ -27,22 +22,16 @@ const MenuPanel = ({ isOpen, onClose }) => {
             {isOpen && (
                 <>
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         onClick={onClose}
                         className="fixed inset-0 bg-black/25 z-40 backdrop-blur-[2px]"
                     />
-
                     <motion.div
-                        initial="closed"
-                        animate="open"
-                        exit="closed"
+                        initial="closed" animate="open" exit="closed"
                         variants={panelVariants}
                         className="fixed top-0 right-0 h-full w-[92vw] md:w-[68vw] lg:w-[58vw] bg-[#FFF7E6] z-50 overflow-y-auto shadow-2xl rounded-l-3xl border-l border-[var(--color-header)]/15"
                         style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")' }}
                     >
-                        {/* Close button */}
                         <button
                             onClick={onClose}
                             className="fixed top-6 right-6 z-[60] w-10 h-10 flex items-center justify-center bg-white/70 rounded-full border border-[var(--color-header)]/15 shadow-sm text-[var(--color-subheading)] hover:text-[var(--color-header)] hover:shadow-md transition-all"
@@ -53,8 +42,7 @@ const MenuPanel = ({ isOpen, onClose }) => {
                             </svg>
                         </button>
 
-                        <div className="px-8 md:px-14 pt-16 pb-20">
-                            {/* Header */}
+                        <div className="px-10 md:px-14 pt-16 pb-20">
                             <div className="mb-10">
                                 <h2 className="text-[32px] md:text-[36px] font-serif text-[var(--color-header)] tracking-wide mb-1">
                                     Collection
@@ -69,38 +57,41 @@ const MenuPanel = ({ isOpen, onClose }) => {
                                 {/* Chronicles of Work */}
                                 <div>
                                     <div className="flex items-center gap-3 mb-6">
-                                        <h3 className="text-[13px] uppercase tracking-[0.2em] font-bold text-[var(--color-date)]">
-                                            Chronicles of Work
-                                        </h3>
+                                        <h3 className="text-[13px] uppercase tracking-[0.2em] font-bold text-[var(--color-date)]">Chronicles of Work</h3>
                                         <div className="flex-1 h-px bg-[var(--color-date)]/20"></div>
                                     </div>
-
                                     <div className="space-y-4">
                                         {workExperiences.map((exp) => (
                                             <motion.div key={exp.id} variants={itemVariants}>
                                                 <Link to={`/book/${exp.id}`} className="block group">
                                                     <div className="bg-white/60 hover:bg-white/90 rounded-2xl px-6 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-250 ease-out">
-                                                        <div className="flex items-start justify-between gap-4">
-                                                            <div className="flex items-start gap-4 flex-1 min-w-0">
-                                                                {/* Color dot */}
-                                                                <div className="w-3 h-3 rounded-full mt-[6px] flex-shrink-0" style={{ backgroundColor: exp.color }}></div>
+                                                        <div className="flex items-center justify-between gap-4">
+                                                            <div className="flex items-center gap-4 flex-1 min-w-0">
+                                                                {/* Book icon */}
+                                                                <img
+                                                                    src="/icon-book.png"
+                                                                    alt=""
+                                                                    className="w-7 h-7 object-contain flex-shrink-0 opacity-70"
+                                                                    onError={(e) => {
+                                                                        e.target.style.display = 'none';
+                                                                        e.target.nextSibling.style.display = 'block';
+                                                                    }}
+                                                                />
+                                                                <div className="w-3 h-3 rounded-full flex-shrink-0 hidden" style={{ backgroundColor: exp.color }}></div>
                                                                 <div className="min-w-0">
-                                                                    {/* Company name — biggest */}
                                                                     <h4 className="font-serif text-[20px] md:text-[22px] font-bold text-[var(--color-header)] group-hover:text-[var(--color-subheading)] transition-colors leading-tight mb-1">
                                                                         {exp.company}
                                                                     </h4>
-                                                                    {/* Role — medium */}
                                                                     <p className="font-serif text-[15px] text-[var(--color-subheading)] mb-1">
                                                                         {exp.role}
                                                                     </p>
-                                                                    {/* Period — small */}
                                                                     <p className="font-serif text-[13px] text-[var(--color-date)] italic">
                                                                         {exp.period} · {exp.location}
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <span className="font-serif text-[13px] text-[var(--color-subheading)] italic opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1">
-                                                                Open →
+                                                            <span className="font-serif text-[13px] text-[var(--color-subheading)] italic opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                                                                Open
                                                             </span>
                                                         </div>
                                                     </div>
@@ -113,31 +104,22 @@ const MenuPanel = ({ isOpen, onClose }) => {
                                 {/* Project Records */}
                                 <div>
                                     <div className="flex items-center gap-3 mb-6">
-                                        <h3 className="text-[13px] uppercase tracking-[0.2em] font-bold text-[var(--color-date)]">
-                                            Project Records
-                                        </h3>
+                                        <h3 className="text-[13px] uppercase tracking-[0.2em] font-bold text-[var(--color-date)]">Project Records</h3>
                                         <div className="flex-1 h-px bg-[var(--color-date)]/20"></div>
                                     </div>
-
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {standaloneProjects.map((project) => (
                                             <motion.div key={project.id} variants={itemVariants}>
                                                 <Link to={`/record/${project.id}`} className="block group h-full">
                                                     <div className="bg-white/60 hover:bg-white/90 rounded-2xl px-5 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-250 ease-out h-full flex flex-col">
-                                                        {/* Category badge */}
-                                                        <div
-                                                            className="inline-block self-start px-2.5 py-1 rounded-full text-[11px] font-serif font-bold tracking-wide text-white mb-3 shadow-sm"
-                                                            style={{ backgroundColor: project.color }}
-                                                        >
+                                                        <div className="inline-block self-start px-2.5 py-1 rounded-full text-[11px] font-serif font-bold tracking-wide text-white mb-3 shadow-sm"
+                                                            style={{ backgroundColor: project.color }}>
                                                             {project.category}
                                                         </div>
-
                                                         <h4 className="font-serif text-[15px] font-bold text-[var(--color-header)] group-hover:text-[var(--color-subheading)] transition-colors leading-snug mb-1 flex-1">
                                                             {project.title}
                                                         </h4>
-                                                        <p className="font-serif text-[12px] text-[var(--color-date)] italic">
-                                                            {project.year}
-                                                        </p>
+                                                        <p className="font-serif text-[12px] text-[var(--color-date)] italic">{project.year}</p>
                                                     </div>
                                                 </Link>
                                             </motion.div>

@@ -412,21 +412,6 @@ export const standaloneProjects = [
     links: { live: null, github: null }
   },
   {
-    id: 'healthcare-platform',
-    title: 'Healthcare Digital Platform',
-    category: 'UX Research',
-    year: '2024',
-    color: '#1ABC9C',
-    description: 'Conducted user research and journey mapping to identify high-impact feature opportunities in healthcare scheduling.',
-    situation: 'Healthcare platform had unclear pain points causing low engagement and scheduling friction.',
-    task: 'Use user research and journey mapping to identify high-impact feature opportunities and define KPIs.',
-    action: 'Conducted user interviews with healthcare staff\nBuilt journey maps surfacing scheduling pain points\nIdentified highest-impact feature opportunities\nDefined KPIs measuring adoption and engagement',
-    result: 'Clear feature roadmap grounded in user evidence\nKPI framework for measuring platform health\nStrong discovery-to-requirements pipeline demonstrated',
-    skillsUsed: 'User Research · Journey Mapping · KPI Design · Healthcare Domain · Client Experience',
-    technologies: ['User Research', 'Journey Mapping', 'KPI Design', 'Healthcare'],
-    links: { live: null, github: null }
-  },
-  {
     id: 'asset-management',
     title: 'Asset Management Product Landscape',
     category: 'Strategy',
