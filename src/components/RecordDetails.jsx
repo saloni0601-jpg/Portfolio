@@ -29,7 +29,7 @@ const RecordDetails = () => {
             className="min-h-screen bg-[var(--color-bg-cream)] flex flex-col"
             style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")' }}
         >
-            <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full px-12 md:px-20 pt-28 pb-20">
+            <div className="flex-1 flex flex-col w-full px-12 md:px-20 lg:px-32 pt-28 pb-20">
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-[13px] font-serif text-[var(--color-date)] mb-10">
