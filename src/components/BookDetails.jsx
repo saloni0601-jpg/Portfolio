@@ -1,163 +1,142 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { workExperiences } from '../data/portfolio';
 
 const BookDetails = () => {
     const { bookId } = useParams();
     const navigate = useNavigate();
     const book = workExperiences.find(b => b.id === bookId);
-    const [isOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        // Trigger opening animation after mount
-        const timer = setTimeout(() => setIsOpen(true), 100);
-        return () => clearTimeout(timer);
-    }, []);
 
     if (!book) {
         return <div className="p-10 text-center font-serif text-[var(--color-header)]">Book not found</div>;
     }
 
     return (
-        <div className="min-h-screen bg-[var(--color-header)] flex items-center justify-center p-4 md:p-8 overflow-hidden relative">
-            {/* Background Ambience */}
-            <div className="absolute inset-0 opacity-30 pointer-events-none mix-blend-overlay"
-                style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/wood-pattern.png")' }}>
-            </div>
-            {/* Vignette */}
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_20%,rgba(0,0,0,0.4)_100%)]"></div>
-
-            <button
-                onClick={() => navigate('/')}
-                className="absolute top-8 left-8 text-[#E6C9A8] hover:text-[#FFF7E6] transition-colors font-serif text-xl z-50 flex items-center gap-3 group"
-            >
-                <img src="/icon-back.png" alt="Back" className="w-6 h-6 opacity-80 group-hover:opacity-100 transition-opacity invert brightness-0 sepia-[.5] hue-rotate-[10deg] saturate-[300%]" onError={(e) => e.target.style.display = 'none'} />
-                <span className="tracking-wide">Return to Shelf</span>
-            </button>
-
-            {/* Book Container */}
-            <div className="relative w-full max-w-6xl aspect-[1.6/1] perspective-2000">
-                <motion.div
-                    className="w-full h-full relative preserve-3d transition-all duration-1000"
-                    initial={{ rotateY: 0 }}
-                    animate={{ rotateY: isOpen ? -10 : 0 }} // Slight tilt for 3D effect
-                >
-                    {/* Book Cover (Front) - Animates open */}
-                    <motion.div
-                        className="absolute top-0 left-1/2 w-1/2 h-full bg-[#8B4513] origin-left shadow-2xl z-20 rounded-r-xl flex items-center justify-center"
-                        style={{
-                            backgroundColor: book.color,
-                            transformStyle: 'preserve-3d'
-                        }}
-                        initial={{ rotateY: 0 }}
-                        animate={{ rotateY: isOpen ? -180 : 0 }}
-                        transition={{ duration: 1.5, ease: "easeInOut" }}
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="min-h-screen bg-[var(--color-bg-cream)] pt-20"
+            style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")' }}
+        >
+            {/* Breadcrumb */}
+            <div className="max-w-5xl mx-auto px-6 md:px-12 pt-8 pb-4">
+                <div className="flex items-center gap-2 text-[13px] font-serif text-[var(--color-date)]">
+                    <button
+                        onClick={() => navigate('/', { state: { openShelf: true } })}
+                        className="hover:text-[var(--color-subheading)] transition-colors"
                     >
-                        {/* Front Cover Design */}
-                        <div className="absolute inset-0 backface-hidden border-[6px] border-[#FFF7E6]/20 m-6 rounded flex flex-col items-center justify-center text-center p-10" style={{ backfaceVisibility: 'hidden' }}>
-                            <h1 className="text-[#FFF7E6] font-serif text-5xl md:text-7xl mb-6 drop-shadow-lg tracking-wide">{book.company}</h1>
-                            <div className="w-24 h-[2px] bg-[#FFF7E6]/60 mb-6"></div>
-                            <p className="text-[#FFF7E6]/90 uppercase tracking-[0.2em] text-2xl font-light">{book.role}</p>
-                        </div>
-
-                        {/* Inner Cover (Left Page) */}
-                        <div
-                            className="absolute inset-0 backface-hidden bg-[#FFF7E6] rounded-l-xl p-10 md:p-14 flex flex-col items-center justify-center shadow-[inset_10px_0_20px_rgba(0,0,0,0.1)]"
-                            style={{
-                                transform: 'rotateY(180deg)',
-                                backfaceVisibility: 'hidden',
-                                backgroundImage: `url("https://www.transparenttextures.com/patterns/aged-paper.png")`
-                            }}
-                        >
-                            <div className="flex-1 flex items-center justify-center border border-[var(--color-date)]/30 p-8 m-2 relative w-full">
-                                <div className="text-center">
-                                    <h2 className="font-serif text-4xl md:text-5xl text-[var(--color-header)] mb-6 tracking-wide">
-                                        {book.company}
-                                    </h2>
-                                    <div className="w-24 h-[2px] bg-[var(--color-date)]/60 mx-auto mb-6"></div>
-                                    <p className="font-serif text-xl md:text-2xl text-[var(--color-subheading)] mb-4">
-                                        {book.role}
-                                    </p>
-                                    <p className="font-serif text-lg text-[var(--color-date)] italic">
-                                        {book.period}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Back Cover (Right Page) - Static base */}
-                    <div className="absolute top-0 left-1/2 w-1/2 h-full bg-[#FFF7E6] rounded-r-xl shadow-xl z-10 flex flex-col p-8 md:p-12"
-                        style={{ backgroundImage: `url("https://www.transparenttextures.com/patterns/aged-paper.png")` }}>
-                        <div className="flex-1 border border-[var(--color-date)]/30 p-6 md:p-8 m-2 relative overflow-y-auto custom-scrollbar">
-
-                            {/* Title */}
-                            <h2 className="font-serif text-3xl md:text-4xl text-[var(--color-header)] mb-4 text-center tracking-wide">
-                                {book.company}
-                            </h2>
-
-                            {/* Role & Period */}
-                            <div className="text-center mb-6 pb-6 border-b border-[var(--color-date)]/30">
-                                <p className="font-serif text-lg text-[var(--color-subheading)] mb-1">{book.role}</p>
-                                <p className="font-serif text-base text-[var(--color-date)] italic">{book.period}</p>
-                            </div>
-
-                            {/* Description */}
-                            <p className="font-serif text-base md:text-lg text-[var(--color-text-dark)] leading-relaxed mb-8 text-center px-4">
-                                {book.description}
-                            </p>
-
-                            {/* Table of Contents */}
-                            <h3 className="font-serif text-2xl text-[var(--color-subheading)] mb-6 text-center italic tracking-wide">
-                                Table of Contents
-                            </h3>
-
-                            <div className="space-y-5">
-                                {book.chapters.map((chapter, index) => (
-                                    <Link to={`/book/${bookId}/chapter/${chapter.id}`} key={chapter.id} className="block group">
-                                        <div className="border-b border-dashed border-[var(--color-date)]/40 pb-3 hover:border-[var(--color-subheading)] transition-colors">
-                                            <div className="flex items-start gap-4 mb-2">
-                                                <span className="font-serif text-[var(--color-date)] font-bold text-sm italic flex-shrink-0 mt-1">
-                                                    Chapter {index + 1}
-                                                </span>
-                                                <div className="flex-1">
-                                                    <h4 className="font-serif text-lg md:text-xl text-[var(--color-header)] group-hover:text-[var(--color-subheading)] transition-colors leading-tight mb-1">
-                                                        {chapter.title}
-                                                    </h4>
-                                                    <p className="text-sm text-[var(--color-text-dark)] opacity-70 font-serif italic leading-relaxed">
-                                                        {chapter.description}
-                                                    </p>
-                                                </div>
-                                                <span className="text-xs text-[var(--color-subheading)] opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0 duration-300 font-serif italic flex-shrink-0 mt-1">
-                                                    Read →
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-
-                            {/* Decorative Page Number */}
-                            <div className="absolute bottom-2 right-6 text-[var(--color-date)] opacity-50 font-serif text-lg">
-                                1
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Spine (visible when closed) */}
-                    <motion.div
-                        className="absolute top-0 left-1/2 w-14 h-full bg-[#3E2723] origin-left rounded-l-sm"
-                        style={{
-                            transform: 'translateX(-100%) rotateY(-90deg)',
-                            backgroundColor: book.color,
-                            filter: 'brightness(0.7) contrast(1.2)'
-                        }}
-                    ></motion.div>
-                </motion.div>
+                        Home
+                    </button>
+                    <span className="opacity-40">/</span>
+                    <button
+                        onClick={() => navigate('/', { state: { openShelf: true } })}
+                        className="hover:text-[var(--color-subheading)] transition-colors"
+                    >
+                        Shelf
+                    </button>
+                    <span className="opacity-40">/</span>
+                    <span className="text-[var(--color-header)] font-medium">{book.company}</span>
+                </div>
             </div>
-        </div>
+
+            <div className="max-w-5xl mx-auto px-6 md:px-12 pb-20">
+                {/* Header */}
+                <div className="mb-10 pt-4 border-b border-[var(--color-date)]/20 pb-8">
+                    {/* Color accent line */}
+                    <div className="w-12 h-1 rounded-full mb-5" style={{ backgroundColor: book.color }}></div>
+
+                    <h1 className="font-serif text-[36px] md:text-[48px] font-bold text-[var(--color-header)] leading-tight mb-2">
+                        {book.company}
+                    </h1>
+                    <p className="font-serif text-[18px] md:text-[20px] text-[var(--color-subheading)] mb-1">
+                        {book.role}
+                    </p>
+                    <p className="font-serif text-[14px] text-[var(--color-date)] italic mb-6">
+                        {book.period} · {book.location}
+                    </p>
+                    <p className="font-serif text-[16px] text-[var(--color-text-dark)] leading-relaxed max-w-3xl">
+                        {book.description}
+                    </p>
+
+                    {/* Key metrics */}
+                    {book.highlights && (
+                        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
+                            {book.highlights.map((h, i) => (
+                                <div key={i} className="flex items-start gap-2 text-[14px] font-serif text-[var(--color-text-dark)]">
+                                    <span className="text-[var(--color-date)] mt-[2px] flex-shrink-0">❧</span>
+                                    <span>{h}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* Projects */}
+                <div>
+                    <h2 className="text-[13px] uppercase tracking-[0.2em] font-bold text-[var(--color-date)] mb-6">
+                        Projects & Chapters
+                    </h2>
+
+                    <div className="space-y-4">
+                        {book.projects.map((project, index) => (
+                            <motion.div
+                                key={project.id}
+                                initial={{ opacity: 0, y: 12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.07, duration: 0.3 }}
+                            >
+                                <Link
+                                    to={`/book/${bookId}/chapter/${project.id}`}
+                                    className="block group"
+                                >
+                                    <div className="bg-white/70 hover:bg-white/95 rounded-2xl px-6 py-5 border border-[var(--color-header)]/10 hover:border-[var(--color-header)]/20 hover:shadow-md transition-all duration-200 ease-out">
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--color-date)] font-bold font-serif">
+                                                        {project.role}
+                                                    </span>
+                                                    <span className="text-[var(--color-date)]/30">·</span>
+                                                    <span className="text-[11px] font-serif text-[var(--color-date)] italic">
+                                                        {project.duration}
+                                                    </span>
+                                                </div>
+                                                <h3 className="font-serif text-[18px] md:text-[20px] font-bold text-[var(--color-header)] group-hover:text-[var(--color-subheading)] transition-colors leading-snug mb-2">
+                                                    {project.title}
+                                                </h3>
+                                                <p className="font-serif text-[14px] text-[var(--color-text-dark)] opacity-75 leading-relaxed">
+                                                    {project.description}
+                                                </p>
+
+                                                {/* Tech tags */}
+                                                <div className="flex flex-wrap gap-1.5 mt-3">
+                                                    {project.technologies.slice(0, 4).map(tech => (
+                                                        <span key={tech} className="text-[11px] bg-[var(--color-header)]/6 px-2 py-0.5 rounded-full border border-[var(--color-date)]/20 text-[var(--color-subheading)] font-serif">
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                    {project.technologies.length > 4 && (
+                                                        <span className="text-[11px] text-[var(--color-date)] font-serif italic">
+                                                            +{project.technologies.length - 4} more
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <span className="font-serif text-[13px] text-[var(--color-subheading)] italic opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1">
+                                                Read →
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </motion.div>
     );
 };
 

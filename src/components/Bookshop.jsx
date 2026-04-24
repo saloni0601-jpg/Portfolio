@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import SpeechBubble from './SpeechBubble';
 import MenuPanel from './MenuPanel';
 
 const Bookshop = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [showSpeechBubble, setShowSpeechBubble] = useState(true);
+    const location = useLocation();
+    const [isMenuOpen, setIsMenuOpen] = useState(location.state?.openShelf || false);
+    const [showSpeechBubble, setShowSpeechBubble] = useState(!location.state?.openShelf);
     const [isTalking, setIsTalking] = useState(false);
     const [isHoveringCharacter, setIsHoveringCharacter] = useState(false);
 
-    // Handle talking animation
+    useEffect(() => {
+        if (location.state?.openShelf) {
+            setIsMenuOpen(true);
+            setShowSpeechBubble(false);
+        }
+    }, [location.state]);
+
     useEffect(() => {
         let interval;
         if (showSpeechBubble || isHoveringCharacter) {
@@ -28,46 +35,52 @@ const Bookshop = () => {
     };
 
     return (
-        <div className="relative w-full h-screen overflow-hidden bg-[#2C1810]">
-            {/* Main Background Scene */}
+        <div className="relative w-full h-screen overflow-hidden bg-[#2C1810] pt-16">
             <div
                 className="absolute inset-0 bg-cover bg-center z-0 transition-transform duration-[2s]"
                 style={{
-                    backgroundImage: 'url("/ghibli-bookshop-character.png")',
+                    backgroundImage: 'url("/bookshop-scene.jpg")',
                     transform: isMenuOpen ? 'scale(1.05)' : 'scale(1)'
                 }}
             >
-                {/* Interactive Wall Overlay */}
+                {/* Clickable wall overlay */}
                 <div
                     onClick={handleWallClick}
                     className="absolute inset-0 cursor-pointer z-10 group"
-                    title="Click to explore collection"
+                    title="Click anywhere to explore my work"
                 >
-                    {/* Glow effect on hover */}
-                    <div className="absolute inset-0 bg-[var(--color-glow)] opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-[var(--color-glow)] opacity-0 group-hover:opacity-15 transition-opacity duration-500"></div>
                 </div>
 
-                {/* Character Interaction Area - Invisible but interactive */}
-                {/* Character Interaction Area */}
+                {/* Character hover zone */}
                 <div
-                    className="absolute bottom-0 right-[15%] w-[25%] h-[60%] z-20 cursor-pointer"
+                    className="absolute bottom-0 right-[12%] w-[28%] h-[65%] z-20 cursor-pointer"
                     onMouseEnter={() => {
                         setIsHoveringCharacter(true);
                         if (!isMenuOpen) setShowSpeechBubble(true);
                     }}
                     onMouseLeave={() => setIsHoveringCharacter(false)}
-                    onClick={() => setShowSpeechBubble(true)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setShowSpeechBubble(true);
+                    }}
                 >
+                    {/* Character image swaps between still/talking */}
+                    <img
+                        src={isTalking ? '/character-talking.svg' : '/character-still.svg'}
+                        alt="Saloni"
+                        className="absolute bottom-0 right-0 w-full h-full object-contain pointer-events-none"
+                        onError={(e) => e.target.style.display = 'none'}
+                    />
                 </div>
 
-                {/* Speech Bubble */}
                 <SpeechBubble
                     isVisible={showSpeechBubble && !isMenuOpen}
                     onClose={() => setShowSpeechBubble(false)}
-                    text="Click on the wall to explore our collection of stories"
+                    text="Welcome! Click anywhere on the wall to explore my work →"
                 />
 
-                {/* Floating Dust Motes (CSS Animation) */}
+                {/* Dust motes */}
                 <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
                     {[...Array(20)].map((_, i) => (
                         <div
@@ -86,7 +99,6 @@ const Bookshop = () => {
                 </div>
             </div>
 
-            {/* Menu Panel */}
             <MenuPanel
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}

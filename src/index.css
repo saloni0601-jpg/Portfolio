@@ -1,24 +1,22 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
   /* Typography */
   --font-heading: 'Cormorant Garamond', serif;
   --font-body: 'Gentium Book Plus', serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Gentium Book Plus', serif;
 
-  /* New Warm Bookish Palette */
+  /* Warm Bookish Palette */
   --color-header: #4A2F1B;
-  /* Deep Brown */
   --color-subheading: #7A5230;
-  /* Soft Chestnut */
   --color-date: #A67C52;
-  /* Sepia */
   --color-bg-cream: #FFF7E6;
-  /* Textured Warm Cream */
   --color-paper-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 
-  /* Legacy/Mapped Colors (keeping for compatibility, updating values) */
+  /* Mapped Colors */
   --color-dark-wood: #4A2F1B;
   --color-warm-wood: #7A5230;
   --color-light-wood: #A67C52;
@@ -33,10 +31,6 @@
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
-
-  /* Typography */
-  --font-serif: 'Crimson Text', serif;
-  --font-sans: 'Inter', sans-serif;
 
   /* Transitions */
   --transition-fast: 0.2s ease;
@@ -64,27 +58,10 @@ body {
   line-height: 1.6;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 700;
   line-height: 1.2;
-}
-
-h1 {
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.5rem;
 }
 
 p {
@@ -109,134 +86,42 @@ button {
   transition: all var(--transition-fast);
 }
 
-/* Utility classes */
 .container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
 }
 
-.text-center {
-  text-align: center;
-}
-
-.mb-sm {
-  margin-bottom: var(--spacing-sm);
-}
-
-.mb-md {
-  margin-bottom: var(--spacing-md);
-}
-
-.mb-lg {
-  margin-bottom: var(--spacing-lg);
-}
-
-.mb-xl {
-  margin-bottom: var(--spacing-xl);
-}
-
 /* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes sway {
-
-  0%,
-  100% {
-    transform: rotate(-2deg);
-  }
-
-  50% {
-    transform: rotate(2deg);
-  }
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 10px var(--color-glow);
-  }
-
-  50% {
-    box-shadow: 0 0 20px var(--color-glow), 0 0 30px var(--color-glow);
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes dustMote {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  90% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(-100vh) translateX(20px);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 10px;
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-cream);
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-warm-wood);
-  border-radius: 5px;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-cream); }
+::-webkit-scrollbar-thumb { background: var(--color-warm-wood); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-dark-wood); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-dark-wood);
+/* Tailwind font-serif utility maps to our CSS variable */
+.font-serif {
+  font-family: var(--font-serif) !important;
 }

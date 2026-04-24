@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import TopNav from './components/TopNav';
 import Bookshop from './components/Bookshop';
 import BookDetails from './components/BookDetails';
 import ChapterDetails from './components/ChapterDetails';
@@ -24,6 +25,7 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <Router>
+      <TopNav />
       <AnimatedRoutes />
     </Router>
   );
